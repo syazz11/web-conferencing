@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>final project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://meet.jit.si/external_api.js'></script>
+</head>
+<body>
+<div class="container text-center mt-5">
+    <h1>Student Social Portal</h1>
+    <div class="mt-4">
+        <form id="roomForm">
+            <div class="form-group">
+                <label for="roomName">Enter room name:</label>
+                <input type="text" class="form-control" id="roomName" placeholder="Room Name">
+            </div>
+            <button type="button" id="start" class="btn btn-primary">Start a new meeting</button>
+        </form>
+    </div>
+    <div id="jitsi-container" class="mt-5">
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const startButton = document.getElementById('start');
+    const roomForm = document.getElementById('roomForm');
+    const roomNameInput = document.getElementById('roomName');
+    const jitsiContainer = document.getElementById('jitsi-container');
+
+    startButton.addEventListener('click', () => {
+        const customRoomName = roomNameInput.value.trim();
+
+        if (customRoomName) {
+            initializeJitsi(customRoomName);
+        } else {
+            alert("Please enter a room name.");
+        }
+    });
+
+    roomForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const customRoomName = roomNameInput.value.trim();
+
+        if (customRoomName) {
+            initializeJitsi(customRoomName);
+        } else {
+            alert("Please enter a room name.");
+        }
+    });
+
+    function initializeJitsi(roomName) {
+        const domain = "meet.jit.si";
+        const options = {
+            roomName: roomName,
+            parentNode: jitsiContainer,
+            width: 800,
+            height: 600,
+        };
+        const api = new JitsiMeetExternalAPI(domain, options);
+    }
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
